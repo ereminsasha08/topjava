@@ -9,7 +9,7 @@
     <version>1.0-SNAPSHOT</version>
 
     <name>Calories Management</name>
-    <url>http://topjava.herokuapp.com/</url>
+    <url>https://topjava.herokuapp.com/</url>
 
     <properties>
         <java.version>1.8</java.version>
@@ -19,7 +19,7 @@
 
     <build>
         <finalName>topjava</finalName>
-        <defaultGoal>install</defaultGoal>
+        <defaultGoal>package</defaultGoal>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
