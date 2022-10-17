@@ -351,9 +351,11 @@ JUnit предоставляет нам набор коллбэков — инт
 метод, который будет возвращать его экземпляр. Теперь `JsonUtil` сможет его получить.  
 И нам нужно указать спрингу, чтобы он не создавал второй экземпляр этого объекта, а клал в свой контекст существующий. 
 Для этого в конфигурации `spring-mvc.xml` определим factory-метод, с помощью которого спринг должен
-получить экземпляр (instance) этого класса:  
+получить экземпляр (instance) этого класса:
+
 ```xml
-<bean class="ru.javawebinar.topjava.web.json.JacksonObjectMapper" id="objectMapper" factory-method="getMapper"/>
+
+<bean class="ru.javawebinar.topjava.controller.json.JacksonObjectMapper" id="objectMapper" factory-method="getMapper"/>
 ```  
 а в конфигурации `message-converter` вместо создания бина просто сошлемся на сконфигурированный `objectMapper`.  
 
