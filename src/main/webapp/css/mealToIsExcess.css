@@ -1,10 +1,10 @@
 
-tr.colorGreen {
+.colorGreen {
     color: green;
     text-align-all: center
 }
 
-tr.colorRed {
+.colorRed {
     color: Red;
     text-align-all: center
 }

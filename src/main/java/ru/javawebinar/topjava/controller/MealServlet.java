@@ -1,9 +1,9 @@
 package ru.javawebinar.topjava.controller;
 
 import org.slf4j.Logger;
-import ru.javawebinar.topjava.dao.HashMapDao;
 import ru.javawebinar.topjava.model.Meal;
 import ru.javawebinar.topjava.model.MealTo;
+import ru.javawebinar.topjava.repository.InMemoryRepository;
 import ru.javawebinar.topjava.servicees.Service;
 import ru.javawebinar.topjava.servicees.ServiceImp;
 import ru.javawebinar.topjava.util.MealsUtil;
@@ -23,7 +23,7 @@ public class MealServlet extends HttpServlet {
     private static final Logger log = getLogger(MealServlet.class);
     private static final int CALORIES_PER_DAY = 2000;
 
-    private static Service service = new ServiceImp(new HashMapDao());
+    private static Service service = new ServiceImp(new InMemoryRepository());
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -37,24 +37,30 @@ public class MealServlet extends HttpServlet {
                 Meal meal = service.getMeal(Integer.parseInt(strId));
                 request.setAttribute("meal", meal);
                 request.getRequestDispatcher("/editOrCreateMeal.jsp").forward(request, response);
+                response.sendRedirect("meals");
                 break;
             }
             case ("create"): {
                 log.debug("creat meal");
                 request.getRequestDispatcher("/editOrCreateMeal.jsp").forward(request, response);
+                response.sendRedirect("meals");
                 break;
             }
             case ("delete"): {
                 Integer id = Integer.parseInt(String.valueOf(request.getParameter("mealId")));
                 log.debug("delete meal {}", id);
                 service.deleteMeal(id);
+                response.sendRedirect("meals");
                 break;
             }
+            case ("null"): {
+                log.debug("forward to meals");
+                List<MealTo> mealToList = MealsUtil.allMeals(service.getAllMeal(), CALORIES_PER_DAY);
+                request.setAttribute("mealToList", mealToList);
+                request.getRequestDispatcher("/meals.jsp").forward(request, response);
+            }
         }
-        log.debug("forward to meals");
-        List<MealTo> mealToList = MealsUtil.allMeals(service.getAllMeal(), CALORIES_PER_DAY);
-        request.setAttribute("mealToList", mealToList);
-        request.getRequestDispatcher("/meals.jsp").forward(request, response);
+
     }
 
     @Override

@@ -10,7 +10,7 @@
 <head>
     <title>Edit and create meal form</title>
     <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-    <%@taglib uri="http://myfunction.com/dataTimeFormat" prefix="f" %>
+    <%@taglib uri="http://topjava.javawebinar.ru/functions" prefix="fn" %>
 </head>
 <body>
 <h3><a href="index.html">Home</a></h3>
@@ -24,7 +24,7 @@
             <input type="number" readonly="readonly" disabled="disabled" name="mealId"
                    value="<c:out value="${meal.getId()}"/>"/> <br/>
             Data and Time : <input type="datetime-local" name="dataTime"
-                                   value="<c:out value="${meal.getDateTime()}" />"/> <br/>
+                                   value="${meal.getDateTime()}"/>><br/>
         </c:when>
         <c:otherwise>
             <input type="number" name="mealId" disabled="disabled"> <br/>

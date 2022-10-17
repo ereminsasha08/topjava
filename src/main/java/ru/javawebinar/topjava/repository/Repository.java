@@ -1,11 +1,11 @@
-package ru.javawebinar.topjava.dao;
+package ru.javawebinar.topjava.repository;
 
 import ru.javawebinar.topjava.model.Meal;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
-public interface Dao {
+public interface Repository {
     public Meal addMeal(LocalDateTime localDateTime, String description, int calories);
 
     public Meal getMeal(int id);
