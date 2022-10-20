@@ -23,6 +23,11 @@
     <h2>Meals</h2>
     <a href="meals?action=create">Add Meal</a>
     <br><br>
+    <form method="get">
+        Дата:  с <input type="date" name="withDate">    по <input type="date" name="beforeDate">
+        Время: с <input type="time" name="withTime">    по <input type="time" name="beforeTime"> <br>
+        <button type="submit">Filter</button>
+    </form>
     <table border="1" cellpadding="8" cellspacing="0">
         <thead>
         <tr>

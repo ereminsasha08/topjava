@@ -4,11 +4,15 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 import ru.javawebinar.topjava.model.Meal;
+import ru.javawebinar.topjava.model.Role;
 import ru.javawebinar.topjava.repository.MealRepository;
+import ru.javawebinar.topjava.util.DateTimeUtil;
 import ru.javawebinar.topjava.util.MealsUtil;
 import ru.javawebinar.topjava.util.ValidationUtil;
 import ru.javawebinar.topjava.web.SecurityUtil;
+import ru.javawebinar.topjava.web.user.AbstractUserController;
 
+import java.time.LocalDate;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.Map;
@@ -62,17 +66,17 @@ public class InMemoryMealRepository implements MealRepository {
     }
 
     @Override
-    public Collection<Meal> getAll() {
+    public Collection<Meal> getAll(LocalDate withDate, LocalDate beforeDate) {
         log.info("getAll");
-        return repository.values().stream().sorted(new Comparator<Meal>() {
-            @Override
-            public int compare(Meal o1, Meal o2) {
-                if (o1.getDateTime().isAfter(o2.getDateTime()))
-                return -1;
-                else
-                   return 0;
-            }
-        }).collect(Collectors.toList());
+        return repository.values().stream()
+                .filter(meal -> meal.getUserId() == SecurityUtil.authUserId())
+                .filter(meal -> DateTimeUtil.isBetweenHalfOpen(meal.getDateTime().toLocalDate(), withDate, beforeDate))
+                .sorted((o1, o2) -> {
+                    if (o1.getDateTime().isAfter(o2.getDateTime()))
+                    return -1;
+                    else
+                       return 0;
+                }).collect(Collectors.toList());
     }
 }
 

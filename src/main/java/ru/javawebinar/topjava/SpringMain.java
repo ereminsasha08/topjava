@@ -8,6 +8,8 @@ import ru.javawebinar.topjava.to.MealTo;
 import ru.javawebinar.topjava.web.meal.MealRestController;
 import ru.javawebinar.topjava.web.user.AdminRestController;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.Arrays;
 
 public class SpringMain {
@@ -19,7 +21,7 @@ public class SpringMain {
             adminUserController.create(new User(null, "userName", "email@mail.ru", "password", Role.ADMIN));
             MealRestController mealRestController = appCtx.getBean(MealRestController.class);
             for (MealTo meal:
-            mealRestController.getAll()) {
+            mealRestController.getAll(LocalDate.MIN, LocalTime.MIN, LocalDate.MAX, LocalTime.MAX)) {
                 System.out.println(meal.toString());
             }
         }
