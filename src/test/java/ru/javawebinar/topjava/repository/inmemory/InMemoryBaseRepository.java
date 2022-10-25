@@ -15,6 +15,8 @@ public class InMemoryBaseRepository<T extends AbstractBaseEntity> {
 
     final Map<Integer, T> map = new ConcurrentHashMap<>();
 
+
+
     public T save(T entity) {
         if (entity.isNew()) {
             entity.setId(counter.incrementAndGet());

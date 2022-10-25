@@ -14,7 +14,7 @@ import ru.javawebinar.topjava.util.exception.NotFoundException;
 import static ru.javawebinar.topjava.UserTestData.NOT_FOUND;
 import static ru.javawebinar.topjava.UserTestData.USER_ID;
 
-@ContextConfiguration("classpath:spring/spring-app.xml")
+@ContextConfiguration("file:C:\\Users\\Lazy\\IdeaProjects\\topjava\\src\\test\\resources\\spring-appTest.xml")
 @RunWith(SpringRunner.class)
 @Ignore
 public class InMemoryAdminRestControllerSpringTest {
