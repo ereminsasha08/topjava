@@ -6,6 +6,7 @@ import org.springframework.stereotype.Repository;
 import ru.javawebinar.topjava.MealTestData;
 import ru.javawebinar.topjava.UserTestData;
 import ru.javawebinar.topjava.model.Meal;
+import ru.javawebinar.topjava.model.User;
 import ru.javawebinar.topjava.repository.MealRepository;
 import ru.javawebinar.topjava.util.Util;
 
@@ -76,5 +77,10 @@ public class InMemoryMealRepository implements MealRepository {
                         .filter(filter)
                         .sorted(Comparator.comparing(Meal::getDateTime).reversed())
                         .toList();
+    }
+
+    @Override
+    public User getUserByMealId(int id, int userId) {
+        return null;
     }
 }

@@ -1,6 +1,7 @@
 package ru.javawebinar.topjava.repository.inmemory;
 
 import org.springframework.stereotype.Repository;
+import ru.javawebinar.topjava.model.Meal;
 import ru.javawebinar.topjava.model.User;
 import ru.javawebinar.topjava.repository.UserRepository;
 
@@ -36,5 +37,10 @@ public class InMemoryUserRepository extends InMemoryBaseRepository<User> impleme
                 .filter(u -> email.equals(u.getEmail()))
                 .findFirst()
                 .orElse(null);
+    }
+
+    @Override
+    public List<Meal> getUsersMeal(int id) {
+        return null;
     }
 }
