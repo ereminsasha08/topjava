@@ -1,24 +1,23 @@
-const userAjaxUrl = "admin/users/";
+const userAjaxUrl = "meals/";
 
 // https://stackoverflow.com/a/5064235/548473
 const ctx = {
-    ajaxUrl: userAjaxUrl
-};
-
-//  https://stackoverflow.com/a/22213543/548473
-function enabled(checkbox, id) {
-    let enabled = checkbox.is(":checked");
-    $.ajax({
-        type: "POST",
-        url: userAjaxUrl + id,
-        data: "enabled=" + enabled
-    }).done(function () {
-        checkbox.closest("tr").attr("data-user-enabled", enabled);
-        successNoty(enabled ? "common.enabled" : "common.disabled");
-    }).fail(function () {
-        $(checkbox).prop("checked", !enabled);
-    });
+    ajaxUrl: userAjaxUrl,
+    updateTable: function () {
+        $.ajax({
+            type: "GET",
+            url: userAjaxUrl + "filter",
+            data: $("#filter").serialize()
+        }).done(updateTable);
+    }
 }
+
+
+function clearFilter() {
+    $("#filter")[0].reset();
+    ctx.updateTable();
+}
+
 // $(document).ready(function () {
 $(function () {
     makeEditable(
@@ -30,16 +29,10 @@ $(function () {
                     "data": "dateTime"
                 },
                 {
-                    "data": "email"
+                    "data": "description"
                 },
                 {
-                    "data": "roles"
-                },
-                {
-                    "data": "enabled"
-                },
-                {
-                    "data": "registered"
+                    "data": "calories"
                 },
                 {
                     "defaultContent": "Edit",
@@ -59,4 +52,3 @@ $(function () {
         })
     );
 });
-
