@@ -14,12 +14,15 @@
         <csrf disabled="true"/>
     </http>
 
+
+
     <beans:bean name="noopEncoder" class="org.springframework.security.crypto.password.NoOpPasswordEncoder"/>
 
     <http>
         <intercept-url pattern="/login" access="permitAll()"/>
 
         <intercept-url pattern="/admin/**" access="hasRole('ADMIN')"/>
+        <intercept-url pattern="**/meals/**" access="hasAnyRole('USER', 'ADMIN')"/>
         <intercept-url pattern="/**" access="isAuthenticated()"/>
 
         <form-login login-page="/login" default-target-url="/meals"

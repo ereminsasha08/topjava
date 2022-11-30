@@ -3,13 +3,15 @@ package ru.javawebinar.topjava.util;
 import org.springframework.lang.Nullable;
 import org.springframework.util.StringUtils;
 
+import javax.persistence.AttributeConverter;
+import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 
-public class DateTimeUtil {
+public class DateTimeUtil implements AttributeConverter<LocalDateTime, Timestamp> {
     private static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 
     // DB doesn't support LocalDate.MIN/MAX
@@ -18,6 +20,17 @@ public class DateTimeUtil {
 
     private DateTimeUtil() {
     }
+
+    @Override
+    public java.sql.Timestamp convertToDatabaseColumn(java.time.LocalDateTime entityValue) {
+        return entityValue == null ? null : java.sql.Timestamp.valueOf(entityValue);
+    }
+
+    @Override
+    public java.time.LocalDateTime convertToEntityAttribute(java.sql.Timestamp dbValue) {
+        return dbValue == null ? null : dbValue.toLocalDateTime();
+    }
+
 
     public static LocalDateTime atStartOfDayOrMin(LocalDate localDate) {
         return localDate != null ? localDate.atStartOfDay() : MIN_DATE;
@@ -40,4 +53,5 @@ public class DateTimeUtil {
     LocalTime parseLocalTime(@Nullable String str) {
         return StringUtils.hasLength(str) ? LocalTime.parse(str) : null;
     }
+
 }
